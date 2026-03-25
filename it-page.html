@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>ProjectFlow · Для ИТ-команд</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&family=Roboto+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* ВСЕ СТИЛИ ОСТАЮТСЯ ТАКИМИ ЖЕ */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Open Sans', sans-serif; background-color: #ffffff; color: #1a1e2b; line-height: 1.5; scroll-behavior: smooth; }
+        h1, h2, h3, h4, .btn, .badge { font-family: 'Montserrat', sans-serif; font-weight: 600; }
+        h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; letter-spacing: -0.02em; }
+        h2 { font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 600; margin-bottom: 1.5rem; letter-spacing: -0.01em; text-align: center; }
+        h3 { font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem; }
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 2rem; width: 100%; }
+        :root { --primary: #2ec0f9; --grad-1: #9bbdf9; --grad-2: #c4e0f9; --accent: #b95f89; --dark: #1a2b3e; --card-bg: #ffffff; --shadow: 0 20px 30px -10px rgba(46, 192, 249, 0.15); }
+        .bg-soft { background-color: var(--grad-2); }
+        
+        .btn { display: inline-block; background-color: var(--primary); color: white; padding: 0.9rem 2rem; border-radius: 40px; text-decoration: none; font-weight: 600; transition: all 0.2s ease; border: none; cursor: pointer; text-align: center; font-size: 1rem; box-shadow: 0 4px 8px rgba(0,0,0,0.05); }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 12px 20px -8px var(--primary); }
+        .btn-accent { background-color: var(--accent); }
+        .btn-accent:hover { background-color: #a24b77; box-shadow: 0 12px 20px -8px var(--accent); }
+        .btn-outline { background: transparent; color: var(--primary); border: 2px solid var(--primary); box-shadow: none; }
+        .btn-outline:hover { background: var(--primary); color: white; box-shadow: 0 12px 20px -8px var(--primary); }
+        
+        .lang-switch { display: flex; gap: 0.3rem; margin-right: 0.5rem; }
+        .lang-btn { background: none; border: none; font-size: 0.85rem; font-weight: 500; cursor: pointer; padding: 0.3rem 0.6rem; border-radius: 30px; transition: all 0.2s; color: var(--dark); font-family: 'Montserrat', sans-serif; }
+        .lang-btn.active { background-color: var(--primary); color: white; }
+        .lang-btn:hover:not(.active) { background-color: #eef2f8; }
+        
+        header { padding: 1rem 0; position: sticky; top: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); z-index: 1000; border-bottom: 1px solid #eaf2f9; }
+        .header-flex { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .logo-area { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
+        .logo-placeholder { width: 40px; height: 40px; background: linear-gradient(135deg, var(--primary), var(--grad-1)); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; font-weight: 700; }
+        .logo-text { font-size: 1.5rem; font-weight: 700; color: var(--dark); letter-spacing: -0.02em; }
+        .logo-text span { color: var(--primary); }
+        .header-right { display: flex; align-items: center; gap: 0.8rem; flex-shrink: 0; }
+        .burger { display: none; flex-direction: column; cursor: pointer; gap: 5px; z-index: 1001; }
+        .burger span { width: 25px; height: 3px; background: var(--dark); border-radius: 3px; transition: 0.3s; }
+        .nav-wrapper { display: flex; align-items: center; gap: 1.5rem; }
+        nav { display: flex; }
+        .nav-menu { display: flex; gap: 2rem; list-style: none; align-items: center; margin: 0; padding: 0; }
+        .nav-menu > li > a { text-decoration: none; color: var(--dark); font-weight: 500; transition: 0.2s; font-size: 1rem; white-space: nowrap; }
+        .nav-menu > li > a:hover { color: var(--primary); }
+        .dropdown { position: relative; }
+        .dropdown-menu { position: absolute; top: 100%; left: 0; background: white; border-radius: 16px; box-shadow: 0 20px 35px -10px rgba(0,0,0,0.1); padding: 0.8rem 0; min-width: 200px; opacity: 0; visibility: hidden; transition: all 0.2s ease; z-index: 100; border: 1px solid #eef2f8; list-style: none; }
+        .dropdown:hover .dropdown-menu { opacity: 1; visibility: visible; }
+        .dropdown-menu li { display: block; margin: 0; }
+        .dropdown-menu a { display: block; padding: 0.5rem 1.5rem; color: #1a2b3e; white-space: nowrap; text-decoration: none; }
+        .dropdown-menu a:hover { background: #f0f7ff; color: var(--primary); }
+        .dropdown-toggle .fa-chevron-down { font-size: 0.75rem; margin-left: 0.3rem; }
+        .header-cta .btn { padding: 0.5rem 1.2rem; font-size: 0.9rem; }
+        
+        @media (max-width: 992px) {
+            .burger { display: flex; order: 2; }
+            .header-right { order: 1; margin-left: auto; margin-right: 1rem; }
+            .nav-wrapper { position: fixed; top: 0; right: -100%; width: 280px; height: 100vh; background: white; box-shadow: -5px 0 25px rgba(0,0,0,0.1); padding: 80px 2rem 2rem; transition: right 0.3s ease; z-index: 1000; flex-direction: column; align-items: flex-start; justify-content: flex-start; gap: 2rem; }
+            .nav-wrapper.active { right: 0; }
+            nav { width: 100%; }
+            .nav-menu { flex-direction: column; align-items: flex-start; gap: 1.5rem; width: 100%; }
+            .nav-menu > li { width: 100%; }
+            .nav-menu > li > a { display: block; padding: 0.5rem 0; white-space: normal; }
+            .dropdown { width: 100%; }
+            .dropdown-menu { position: static; opacity: 1; visibility: visible; display: none; box-shadow: none; padding-left: 1rem; margin-top: 0.5rem; background: #f8fafc; width: 100%; }
+            .dropdown-menu a { white-space: normal; word-break: break-word; line-height: 1.4; padding: 0.5rem 1rem; }
+            .dropdown.open .dropdown-menu { display: block; }
+            .dropdown-toggle .fa-chevron-down { float: right; margin-top: 0.5rem; }
+        }
+        
+        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); z-index: 999; }
+        .overlay.active { display: block; }
+        
+        .grid-2, .grid-3, .grid-4 { display: grid; gap: 2rem; }
+        .grid-2 { grid-template-columns: repeat(2,1fr); }
+        .grid-3 { grid-template-columns: repeat(3,1fr); }
+        .grid-4 { grid-template-columns: repeat(4,1fr); }
+        
+        .card { background: var(--card-bg); border-radius: 32px; padding: 2rem 1.5rem; box-shadow: 0 5px 20px rgba(0,0,0,0.02); transition: 0.3s ease; border: 1px solid rgba(157, 192, 249, 0.2); height: 100%; display: flex; flex-direction: column; }
+        .card:hover { box-shadow: var(--shadow); border-color: transparent; }
+        .card-icon { font-size: 2rem; color: var(--primary); margin-bottom: 1rem; }
+        
+        section { padding: 5rem 0; }
+        .section-sub { font-size: 1.2rem; color: #4a5a6e; max-width: 700px; margin: 0 auto 2rem auto; text-align: center; }
+        
+        .tech-badge { background: #f0f7ff; padding: 0.5rem 1rem; border-radius: 40px; display: inline-block; font-size: 0.9rem; margin: 0.5rem 0.5rem 0 0; }
+        
+        footer { background: var(--dark); color: #cbd5e0; padding: 2rem 0; border-radius: 40px 40px 0 0; }
+        .footer-content { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem; }
+        .footer-logo { font-size: 1.3rem; font-weight: 700; color: white; }
+        .footer-logo span { color: var(--primary); }
+        .footer-links { display: flex; flex-wrap: wrap; gap: 1.8rem; }
+        .footer-links a { color: #cbd5e0; text-decoration: none; font-size: 0.9rem; }
+        .footer-links a:hover { color: white; }
+        .footer-copyright { text-align: center; margin-top: 1.5rem; font-size: 0.8rem; color: #8da0b5; }
+        
+        .demo-form { background: var(--grad-2); border-radius: 48px; padding: 3rem; text-align: center; }
+        
+        @media (max-width: 992px) { .grid-3, .grid-4 { grid-template-columns: repeat(2,1fr); } .footer-content { flex-direction: column; text-align: center; } .footer-links { justify-content: center; } }
+        @media (max-width: 768px) { .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; } section { padding: 3rem 0; } }
+        @media (max-width: 480px) { .container { padding: 0 1rem; } }
+    </style>
+</head>
+<body>
+    <div id="overlay" class="overlay"></div>
+
+    <header>
+        <div class="container header-flex">
+            <div class="logo-area">
+                <div class="logo-placeholder">PF</div>
+                <div class="logo-text">Project<span>Flow</span></div>
+            </div>
+            <div class="header-right">
+                <div class="lang-switch">
+                    <button class="lang-btn active" data-lang="ru">RU</button>
+                    <button class="lang-btn" data-lang="be">BE</button>
+                </div>
+                <div class="header-cta">
+                    <a href="index.html#demo" class="btn btn-accent" id="demoBtn">Запросить демо</a>
+                </div>
+            </div>
+            <div class="burger" id="burger"><span></span><span></span><span></span></div>
+            <div class="nav-wrapper" id="navWrapper">
+                <nav>
+                    <ul class="nav-menu">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" id="navMain">Главная <i class="fas fa-chevron-down"></i></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="index.html#product" id="navProduct">Продукт</a></li>
+                                <li><a href="index.html#solutions" id="navSolutions">Что решает</a></li>
+                                <li><a href="index.html#why" id="navWhy">Почему мы</a></li>
+                                <li><a href="index.html#how" id="navHow">Как работаем</a></li>
+                                <li><a href="index.html#tariffs" id="navTariffs">Тарифы</a></li>
+                                <li><a href="index.html#cases" id="navCases">Кейсы</a></li>
+                                <li><a href="index.html#about" id="navAbout">О компании</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" id="navProductDropdown">Продукт <i class="fas fa-chevron-down"></i></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="it-page.html" id="navProductIt">Для ИТ‑команд</a></li>
+                                <li><a href="construction-page.html" id="navProductConstruction">Для строительства и производства</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="blog.html" id="navResources">Ресурсы</a></li>
+                        <li><a href="about.html" id="navAboutPage">О компании</a></li>
+                        <li><a href="contacts.html" id="navContacts">Контакты</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero секция -->
+        <section style="padding-top: 3rem;">
+            <div class="container">
+                <div class="grid-2" style="align-items: center;">
+                    <div>
+                        <h1 id="heroTitle">ProjectFlow <span style="color: var(--primary);">для ИТ-команд</span></h1>
+                        <p class="section-sub" style="text-align: left; margin: 1.5rem 0;" id="heroDesc">Полный набор инструментов для Agile-разработки: Scrum, Kanban, интеграция с Git, аналитика и тайм-трекинг.</p>
+                        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                            <a href="index.html#demo" class="btn btn-accent" id="demoLink"><i class="fas fa-calendar-alt"></i> Запросить демо</a>
+                            <a href="#" class="btn btn-outline" id="videoLink"><i class="fas fa-play-circle"></i> Смотреть видео</a>
+                        </div>
+                    </div>
+                    <div style="background: var(--grad-2); border-radius: 48px; padding: 2rem; text-align: center;">
+                        <i class="fas fa-code" style="font-size: 5rem; color: var(--primary);"></i>
+                        <p style="margin-top: 1rem;" id="integrationsBadge">Интеграция с GitLab, GitHub, Bitbucket</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ключевые возможности -->
+        <section class="bg-soft">
+            <div class="container">
+                <h2 id="featuresTitle">Всё для эффективной разработки</h2>
+                <div class="grid-3">
+                    <div class="card"><i class="fas fa-tasks card-icon"></i><h3 id="feature1Title">Гибкая система задач</h3><p id="feature1Desc">Доски Kanban, спринты, бэклог — настраивайте процессы под свою команду.</p></div>
+                    <div class="card"><i class="fas fa-chart-line card-icon"></i><h3 id="feature2Title">Agile-аналитика</h3><p id="feature2Desc">Burn-down charts, velocity, дашборды для ретроспектив.</p></div>
+                    <div class="card"><i class="fas fa-stopwatch card-icon"></i><h3 id="feature3Title">Тайм-трекинг</h3><p id="feature3Desc">Отслеживайте время по задачам, формируйте отчёты для клиентов.</p></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Интеграции -->
+        <section>
+            <div class="container">
+                <h2 id="integrationsTitle">Интеграции с вашим стеком</h2>
+                <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;">
+                    <span class="tech-badge"><i class="fab fa-git-alt"></i> GitLab</span>
+                    <span class="tech-badge"><i class="fab fa-github"></i> GitHub</span>
+                    <span class="tech-badge"><i class="fab fa-bitbucket"></i> Bitbucket</span>
+                    <span class="tech-badge"><i class="fas fa-database"></i> Jira</span>
+                    <span class="tech-badge"><i class="fab fa-slack"></i> Slack</span>
+                    <span class="tech-badge"><i class="fab fa-telegram"></i> Telegram</span>
+                    <span class="tech-badge"><i class="fas fa-chart-simple"></i> Power BI</span>
+                </div>
+                <div style="margin-top: 2rem; text-align: center;">
+                    <p id="apiText">API открыт для любых кастомных интеграций</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Преимущества -->
+        <section class="bg-soft">
+            <div class="container">
+                <h2 id="advantagesTitle">Почему ИТ-команды выбирают ProjectFlow</h2>
+                <div class="grid-2">
+                    <div class="card"><i class="fas fa-laptop-code card-icon"></i><h3 id="adv1Title">Локализация данных в РБ</h3><p id="adv1Desc">Все данные хранятся на серверах в Беларуси. Соответствие законодательству.</p></div>
+                    <div class="card"><i class="fas fa-puzzle-piece card-icon"></i><h3 id="adv2Title">Автоматическая синхронизация</h3><p id="adv2Desc">Задачи и коммиты связываются автоматически. Код и документация в одном месте.</p></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section>
+            <div class="container">
+                <div class="demo-form">
+                    <h2 id="ctaTitle">Готовы ускорить разработку?</h2>
+                    <p id="ctaDesc">Попробуйте ProjectFlow бесплатно 14 дней. Без карты, без обязательств.</p>
+                    <a href="index.html#demo" class="btn btn-accent" style="margin-top: 1.5rem; display: inline-block;" id="ctaBtn">Запросить демо</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">Project<span>Flow</span></div>
+                <div class="footer-links">
+                    <a href="index.html" id="footerMain">Главная</a>
+                    <a href="it-page.html" id="footerProduct">Продукт</a>
+                    <a href="blog.html" id="footerResources">Ресурсы</a>
+                    <a href="about.html" id="footerAbout">О компании</a>
+                    <a href="contacts.html" id="footerContacts">Контакты</a>
+                </div>
+            </div>
+            <div class="footer-copyright">
+                <p id="copyright">© 2026 ООО «ПроектФлоу». Хостинг в РБ, данные под защитой. SSL • локализация • надёжность</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // СЛОВАРИ ПЕРЕВОДОВ
+        const translations = {
+            ru: {
+                demoBtn: "Запросить демо",
+                navMain: "Главная", navProduct: "Продукт", navSolutions: "Что решает", navWhy: "Почему мы",
+                navHow: "Как работаем", navTariffs: "Тарифы", navCases: "Кейсы", navAbout: "О компании",
+                navProductDropdown: "Продукт", navProductIt: "Для ИТ‑команд", navProductConstruction: "Для строительства и производства",
+                navResources: "Ресурсы", navAboutPage: "О компании", navContacts: "Контакты",
+                heroTitle: "ProjectFlow <span style='color: #2ec0f9;'>для ИТ-команд</span>",
+                heroDesc: "Полный набор инструментов для Agile-разработки: Scrum, Kanban, интеграция с Git, аналитика и тайм-трекинг.",
+                demoLink: "Запросить демо", videoLink: "Смотреть видео",
+                integrationsBadge: "Интеграция с GitLab, GitHub, Bitbucket",
+                featuresTitle: "Всё для эффективной разработки",
+                feature1Title: "Гибкая система задач", feature1Desc: "Доски Kanban, спринты, бэклог — настраивайте процессы под свою команду.",
+                feature2Title: "Agile-аналитика", feature2Desc: "Burn-down charts, velocity, дашборды для ретроспектив.",
+                feature3Title: "Тайм-трекинг", feature3Desc: "Отслеживайте время по задачам, формируйте отчёты для клиентов.",
+                integrationsTitle: "Интеграции с вашим стеком",
+                apiText: "API открыт для любых кастомных интеграций",
+                advantagesTitle: "Почему ИТ-команды выбирают ProjectFlow",
+                adv1Title: "Локализация данных в РБ", adv1Desc: "Все данные хранятся на серверах в Беларуси. Соответствие законодательству.",
+                adv2Title: "Автоматическая синхронизация", adv2Desc: "Задачи и коммиты связываются автоматически. Код и документация в одном месте.",
+                ctaTitle: "Готовы ускорить разработку?", ctaDesc: "Попробуйте ProjectFlow бесплатно 14 дней. Без карты, без обязательств.", ctaBtn: "Запросить демо",
+                footerMain: "Главная", footerProduct: "Продукт", footerResources: "Ресурсы", footerAbout: "О компании", footerContacts: "Контакты",
+                copyright: "© 2026 ООО «ПроектФлоу». Хостинг в РБ, данные под защитой. SSL • локализация • надёжность"
+            },
+            be: {
+                demoBtn: "Запрасіць дэма",
+                navMain: "Галоўная", navProduct: "Прадукт", navSolutions: "Што вырашае", navWhy: "Чаму мы",
+                navHow: "Як працуем", navTariffs: "Тарыфы", navCases: "Кейсы", navAbout: "Аб кампаніі",
+                navProductDropdown: "Прадукт", navProductIt: "Для ІТ‑каманд", navProductConstruction: "Для будаўніцтва і вытворчасці",
+                navResources: "Рэсурсы", navAboutPage: "Аб кампаніі", navContacts: "Кантакты",
+                heroTitle: "ProjectFlow <span style='color: #2ec0f9;'>для ІТ-каманд</span>",
+                heroDesc: "Поўны набор інструментаў для Agile-распрацоўкі: Scrum, Kanban, інтэграцыя з Git, аналітыка і тайм-трэкінг.",
+                demoLink: "Запрасіць дэма", videoLink: "Глядзець відэа",
+                integrationsBadge: "Інтэграцыя з GitLab, GitHub, Bitbucket",
+                featuresTitle: "Усё для эфектыўнай распрацоўкі",
+                feature1Title: "Гнуткая сістэма задач", feature1Desc: "Дошкі Kanban, спрынты, бэклог — наладжвайце працэсы пад сваю каманду.",
+                feature2Title: "Agile-аналітыка", feature2Desc: "Burn-down charts, velocity, дашборды для рэтраспектыў.",
+                feature3Title: "Тайм-трэкінг", feature3Desc: "Адсочвайце час па задачах, фарміруйце справаздачы для кліентаў.",
+                integrationsTitle: "Інтэграцыі з вашым стэкам",
+                apiText: "API адкрыты для любых кастомных інтэграцый",
+                advantagesTitle: "Чаму ІТ-каманды выбіраюць ProjectFlow",
+                adv1Title: "Лакалізацыя даных у РБ", adv1Desc: "Усе даныя захоўваюцца на серверах у Беларусі. Адпаведнасць заканадаўству.",
+                adv2Title: "Аўтаматычная сінхранізацыя", adv2Desc: "Задачы і каміты звязваюцца аўтаматычна. Код і дакументацыя ў адным месцы.",
+                ctaTitle: "Гатовы паскорыць распрацоўку?", ctaDesc: "Паспрабуйце ProjectFlow бясплатна 14 дзён. Без карты, без абавязацельстваў.", ctaBtn: "Запрасіць дэма",
+                footerMain: "Галоўная", footerProduct: "Прадукт", footerResources: "Рэсурсы", footerAbout: "Аб кампаніі", footerContacts: "Кантакты",
+                copyright: "© 2026 ААТ «ПраектФлоу». Хостынг у РБ, даныя пад абаронай. SSL • лакалізацыя • надзейнасць"
+            }
+        };
+
+        function applyLanguage(lang) {
+            const t = translations[lang];
+            if (!t) return;
+            Object.keys(t).forEach(key => {
+                const el = document.getElementById(key);
+                if (el) {
+                    if (el.tagName === 'BUTTON' && key !== 'calcBtn') el.textContent = t[key];
+                    else el.innerHTML = t[key];
+                }
+            });
+            const navMain = document.getElementById('navMain');
+            if (navMain) navMain.innerHTML = t.navMain + ' <i class="fas fa-chevron-down"></i>';
+            const navProductDropdown = document.getElementById('navProductDropdown');
+            if (navProductDropdown) navProductDropdown.innerHTML = t.navProductDropdown + ' <i class="fas fa-chevron-down"></i>';
+            
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.lang === lang) btn.classList.add('active');
+            });
+        }
+
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', () => applyLanguage(btn.dataset.lang));
+        });
+
+        const burger = document.getElementById('burger');
+        const navWrapper = document.getElementById('navWrapper');
+        const overlay = document.getElementById('overlay');
+        if (burger) {
+            burger.addEventListener('click', () => {
+                navWrapper.classList.toggle('active');
+                overlay.classList.toggle('active');
+                document.body.style.overflow = navWrapper.classList.contains('active') ? 'hidden' : '';
+            });
+            overlay.addEventListener('click', () => {
+                navWrapper.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        }
+
+        document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
+            toggle.addEventListener('click', function(e) {
+                if (window.innerWidth <= 992) {
+                    e.preventDefault();
+                    this.closest('.dropdown').classList.toggle('open');
+                }
+            });
+        });
+
+        applyLanguage('ru');
+    </script>
+</body>
+</html>

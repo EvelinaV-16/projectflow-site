@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>ProjectFlow · О компании</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&family=Roboto+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Стили полностью сохранены из предыдущей версии */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Open Sans', sans-serif; background-color: #ffffff; color: #1a1e2b; line-height: 1.5; scroll-behavior: smooth; }
+        h1, h2, h3, h4, .btn, .badge { font-family: 'Montserrat', sans-serif; font-weight: 600; }
+        h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; letter-spacing: -0.02em; text-align: center; }
+        h2 { font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 600; margin-bottom: 1.5rem; letter-spacing: -0.01em; text-align: center; }
+        h3 { font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem; }
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 2rem; width: 100%; }
+        :root { --primary: #2ec0f9; --grad-1: #9bbdf9; --grad-2: #c4e0f9; --accent: #b95f89; --dark: #1a2b3e; --card-bg: #ffffff; --shadow: 0 20px 30px -10px rgba(46, 192, 249, 0.15); }
+        .bg-soft { background-color: var(--grad-2); }
+        
+        .btn { display: inline-block; background-color: var(--primary); color: white; padding: 0.9rem 2rem; border-radius: 40px; text-decoration: none; font-weight: 600; transition: all 0.2s ease; border: none; cursor: pointer; text-align: center; font-size: 1rem; box-shadow: 0 4px 8px rgba(0,0,0,0.05); }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 12px 20px -8px var(--primary); }
+        .btn-accent { background-color: var(--accent); }
+        .btn-accent:hover { background-color: #a24b77; box-shadow: 0 12px 20px -8px var(--accent); }
+        
+        .lang-switch { display: flex; gap: 0.3rem; margin-right: 0.5rem; }
+        .lang-btn { background: none; border: none; font-size: 0.85rem; font-weight: 500; cursor: pointer; padding: 0.3rem 0.6rem; border-radius: 30px; transition: all 0.2s; color: var(--dark); font-family: 'Montserrat', sans-serif; }
+        .lang-btn.active { background-color: var(--primary); color: white; }
+        .lang-btn:hover:not(.active) { background-color: #eef2f8; }
+        
+        header { padding: 1rem 0; position: sticky; top: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); z-index: 1000; border-bottom: 1px solid #eaf2f9; }
+        .header-flex { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .logo-area { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
+        .logo-placeholder { width: 40px; height: 40px; background: linear-gradient(135deg, var(--primary), var(--grad-1)); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; font-weight: 700; }
+        .logo-text { font-size: 1.5rem; font-weight: 700; color: var(--dark); letter-spacing: -0.02em; }
+        .logo-text span { color: var(--primary); }
+        .header-right { display: flex; align-items: center; gap: 0.8rem; flex-shrink: 0; }
+        .burger { display: none; flex-direction: column; cursor: pointer; gap: 5px; z-index: 1001; }
+        .burger span { width: 25px; height: 3px; background: var(--dark); border-radius: 3px; transition: 0.3s; }
+        .nav-wrapper { display: flex; align-items: center; gap: 1.5rem; }
+        nav { display: flex; }
+        .nav-menu { display: flex; gap: 2rem; list-style: none; align-items: center; margin: 0; padding: 0; }
+        .nav-menu > li > a { text-decoration: none; color: var(--dark); font-weight: 500; transition: 0.2s; font-size: 1rem; white-space: nowrap; }
+        .nav-menu > li > a:hover { color: var(--primary); }
+        .dropdown { position: relative; }
+        .dropdown-menu { position: absolute; top: 100%; left: 0; background: white; border-radius: 16px; box-shadow: 0 20px 35px -10px rgba(0,0,0,0.1); padding: 0.8rem 0; min-width: 200px; opacity: 0; visibility: hidden; transition: all 0.2s ease; z-index: 100; border: 1px solid #eef2f8; list-style: none; }
+        .dropdown:hover .dropdown-menu { opacity: 1; visibility: visible; }
+        .dropdown-menu li { display: block; margin: 0; }
+        .dropdown-menu a { display: block; padding: 0.5rem 1.5rem; color: #1a2b3e; white-space: nowrap; text-decoration: none; }
+        .dropdown-menu a:hover { background: #f0f7ff; color: var(--primary); }
+        .dropdown-toggle .fa-chevron-down { font-size: 0.75rem; margin-left: 0.3rem; }
+        .header-cta .btn { padding: 0.5rem 1.2rem; font-size: 0.9rem; }
+        
+        @media (max-width: 992px) {
+            .burger { display: flex; order: 2; }
+            .header-right { order: 1; margin-left: auto; margin-right: 1rem; }
+            .nav-wrapper { position: fixed; top: 0; right: -100%; width: 280px; height: 100vh; background: white; box-shadow: -5px 0 25px rgba(0,0,0,0.1); padding: 80px 2rem 2rem; transition: right 0.3s ease; z-index: 1000; flex-direction: column; align-items: flex-start; justify-content: flex-start; gap: 2rem; }
+            .nav-wrapper.active { right: 0; }
+            nav { width: 100%; }
+            .nav-menu { flex-direction: column; align-items: flex-start; gap: 1.5rem; width: 100%; }
+            .nav-menu > li { width: 100%; }
+            .nav-menu > li > a { display: block; padding: 0.5rem 0; white-space: normal; }
+            .dropdown { width: 100%; }
+            .dropdown-menu { position: static; opacity: 1; visibility: visible; display: none; box-shadow: none; padding-left: 1rem; margin-top: 0.5rem; background: #f8fafc; width: 100%; }
+            .dropdown-menu a { white-space: normal; word-break: break-word; line-height: 1.4; padding: 0.5rem 1rem; }
+            .dropdown.open .dropdown-menu { display: block; }
+            .dropdown-toggle .fa-chevron-down { float: right; margin-top: 0.5rem; }
+        }
+        
+        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); z-index: 999; }
+        .overlay.active { display: block; }
+        
+        .grid-2, .grid-3, .grid-4 { display: grid; gap: 2rem; }
+        .grid-2 { grid-template-columns: repeat(2,1fr); }
+        .grid-3 { grid-template-columns: repeat(3,1fr); }
+        .grid-4 { grid-template-columns: repeat(4,1fr); }
+        
+        .card { background: white; border-radius: 32px; padding: 2rem; box-shadow: 0 5px 20px rgba(0,0,0,0.02); transition: 0.3s ease; border: 1px solid rgba(157, 192, 249, 0.2); height: 100%; text-align: center; }
+        .card:hover { box-shadow: var(--shadow); border-color: transparent; }
+        .team-card { text-align: center; background: white; border-radius: 32px; padding: 2rem; border: 1px solid rgba(157, 192, 249, 0.2); }
+        .team-avatar { width: 120px; height: 120px; background: var(--grad-2); border-radius: 50%; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; font-size: 3rem; color: var(--primary); }
+        
+        section { padding: 5rem 0; }
+        .section-sub { font-size: 1.2rem; color: #4a5a6e; max-width: 800px; margin: 0 auto 2rem auto; text-align: center; }
+        
+        footer { background: var(--dark); color: #cbd5e0; padding: 2rem 0; border-radius: 40px 40px 0 0; }
+        .footer-content { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem; }
+        .footer-logo { font-size: 1.3rem; font-weight: 700; color: white; }
+        .footer-logo span { color: var(--primary); }
+        .footer-links { display: flex; flex-wrap: wrap; gap: 1.8rem; }
+        .footer-links a { color: #cbd5e0; text-decoration: none; font-size: 0.9rem; }
+        .footer-links a:hover { color: white; }
+        .footer-copyright { text-align: center; margin-top: 1.5rem; font-size: 0.8rem; color: #8da0b5; }
+        
+        .values-list { display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center; margin-top: 2rem; }
+        .value-item { text-align: center; max-width: 200px; }
+        .value-item i { font-size: 2.5rem; color: var(--primary); margin-bottom: 1rem; }
+        
+        @media (max-width: 992px) { .grid-3, .grid-4 { grid-template-columns: repeat(2,1fr); } .footer-content { flex-direction: column; text-align: center; } .footer-links { justify-content: center; } }
+        @media (max-width: 768px) { .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; } section { padding: 3rem 0; } }
+        @media (max-width: 480px) { .container { padding: 0 1rem; } }
+    </style>
+</head>
+<body>
+    <div id="overlay" class="overlay"></div>
+
+    <header>
+        <div class="container header-flex">
+            <div class="logo-area">
+                <div class="logo-placeholder">PF</div>
+                <div class="logo-text">Project<span>Flow</span></div>
+            </div>
+            <div class="header-right">
+                <div class="lang-switch">
+                    <button class="lang-btn active" data-lang="ru">RU</button>
+                    <button class="lang-btn" data-lang="be">BE</button>
+                </div>
+                <div class="header-cta">
+                    <a href="index.html#demo" class="btn btn-accent" id="demoBtn">Запросить демо</a>
+                </div>
+            </div>
+            <div class="burger" id="burger"><span></span><span></span><span></span></div>
+            <div class="nav-wrapper" id="navWrapper">
+                <nav>
+                    <ul class="nav-menu">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" id="navMain">Главная <i class="fas fa-chevron-down"></i></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="index.html#product" id="navProduct">Продукт</a></li>
+                                <li><a href="index.html#solutions" id="navSolutions">Что решает</a></li>
+                                <li><a href="index.html#why" id="navWhy">Почему мы</a></li>
+                                <li><a href="index.html#how" id="navHow">Как работаем</a></li>
+                                <li><a href="index.html#tariffs" id="navTariffs">Тарифы</a></li>
+                                <li><a href="index.html#cases" id="navCases">Кейсы</a></li>
+                                <li><a href="index.html#about" id="navAbout">О компании</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" id="navProductDropdown">Продукт <i class="fas fa-chevron-down"></i></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="it-page.html" id="navProductIt">Для ИТ‑команд</a></li>
+                                <li><a href="construction-page.html" id="navProductConstruction">Для строительства и производства</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="blog.html" id="navResources">Ресурсы</a></li>
+                        <li><a href="about.html" id="navAboutPage">О компании</a></li>
+                        <li><a href="contacts.html" id="navContacts">Контакты</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section style="padding-top: 3rem;">
+            <div class="container">
+                <h1 id="aboutHeroTitle">О компании ProjectFlow</h1>
+                <p class="section-sub" id="aboutHeroDesc">Мы создаём облачное ПО для управления проектами, которое помогает командам в Беларуси и за её пределами работать эффективнее.</p>
+            </div>
+        </section>
+
+        <section class="bg-soft">
+            <div class="container">
+                <div class="grid-2">
+                    <div class="card" style="text-align: left;">
+                        <i class="fas fa-rocket" style="font-size: 2.5rem; color: var(--primary); margin-bottom: 1rem;"></i>
+                        <h3 id="missionTitle">Наша миссия</h3>
+                        <p id="missionDesc">Дать белорусскому бизнесу современный, безопасный и локальный инструмент управления проектами взамен зарубежных решений. Мы верим, что качественное ПО должно быть доступным и соответствовать местным требованиям.</p>
+                    </div>
+                    <div class="card" style="text-align: left;">
+                        <i class="fas fa-eye" style="font-size: 2.5rem; color: var(--primary); margin-bottom: 1rem;"></i>
+                        <h3 id="visionTitle">Наше видение</h3>
+                        <p id="visionDesc">Стать лидером на рынке облачных решений для управления проектами в Восточной Европе, создавая продукты, которые объединяют команды и делают работу прозрачной.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+                <h2 id="valuesTitle">Наши ценности</h2>
+                <div class="values-list">
+                    <div class="value-item"><i class="fas fa-shield-alt"></i><h4 id="value1Title">Безопасность</h4><p id="value1Desc">Локализация данных в РБ и строгие стандарты защиты</p></div>
+                    <div class="value-item"><i class="fas fa-handshake"></i><h4 id="value2Title">Доверие</h4><p id="value2Desc">Прозрачность и честность перед клиентами</p></div>
+                    <div class="value-item"><i class="fas fa-lightbulb"></i><h4 id="value3Title">Инновации</h4><p id="value3Desc">Постоянное развитие и внедрение новых технологий</p></div>
+                    <div class="value-item"><i class="fas fa-users"></i><h4 id="value4Title">Команда</h4><p id="value4Desc">Люди — главная ценность компании</p></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-soft">
+            <div class="container">
+                <h2 id="teamTitle">Наша команда</h2>
+                <div class="grid-3">
+                    <div class="team-card">
+                        <div class="team-avatar"><i class="fas fa-user-circle"></i></div>
+                        <h3 id="team1Name">Таврель Юлия</h3>
+                        <p id="team1Role">CEO и основатель</p>
+                        <p id="team1Desc">Более 12 лет в IT, эксперт в области управления проектами и развития продуктов.</p>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-avatar"><i class="fas fa-user-circle"></i></div>
+                        <h3 id="team2Name">Мария Шевченко</h3>
+                        <p id="team2Role">Технический директор</p>
+                        <p id="team2Desc">Специалист по облачным архитектурам и масштабируемым решениям.</p>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-avatar"><i class="fas fa-user-circle"></i></div>
+                        <h3 id="team3Name">Дмитрий Зайцев</h3>
+                        <p id="team3Role">Руководитель разработки</p>
+                        <p id="team3Desc">Эксперт в Agile, Java и микросервисной архитектуре.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+                <h2 id="historyTitle">Наша история</h2>
+                <div class="grid-2">
+                    <div class="card" style="text-align: left;">
+                        <h3>2020</h3>
+                        <p id="history2020">Основание компании. Первая версия платформы для внутреннего использования.</p>
+                    </div>
+                    <div class="card" style="text-align: left;">
+                        <h3>2022</h3>
+                        <p id="history2022">Выход на рынок. Первые 50 клиентов в Беларуси.</p>
+                    </div>
+                    <div class="card" style="text-align: left;">
+                        <h3>2024</h3>
+                        <p id="history2024">Резидентство в ПВТ. Сертификация ISO 27001.</p>
+                    </div>
+                    <div class="card" style="text-align: left;">
+                        <h3>2026</h3>
+                        <p id="history2026">Более 150 компаний доверяют нам. Запуск нового API и интеграций.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">Project<span>Flow</span></div>
+                <div class="footer-links">
+                    <a href="index.html" id="footerMain">Главная</a>
+                    <a href="it-page.html" id="footerProduct">Продукт</a>
+                    <a href="blog.html" id="footerResources">Ресурсы</a>
+                    <a href="about.html" id="footerAbout">О компании</a>
+                    <a href="contacts.html" id="footerContacts">Контакты</a>
+                </div>
+            </div>
+            <div class="footer-copyright">
+                <p id="copyright">© 2026 ООО «ПроектФлоу». Хостинг в РБ, данные под защитой. SSL • локализация • надёжность</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const translations = {
+            ru: {
+                demoBtn: "Запросить демо",
+                navMain: "Главная", navProduct: "Продукт", navSolutions: "Что решает", navWhy: "Почему мы",
+                navHow: "Как работаем", navTariffs: "Тарифы", navCases: "Кейсы", navAbout: "О компании",
+                navProductDropdown: "Продукт", navProductIt: "Для ИТ‑команд", navProductConstruction: "Для строительства и производства",
+                navResources: "Ресурсы", navAboutPage: "О компании", navContacts: "Контакты",
+                aboutHeroTitle: "О компании ProjectFlow",
+                aboutHeroDesc: "Мы создаём облачное ПО для управления проектами, которое помогает командам в Беларуси и за её пределами работать эффективнее.",
+                missionTitle: "Наша миссия", missionDesc: "Дать белорусскому бизнесу современный, безопасный и локальный инструмент управления проектами взамен зарубежных решений. Мы верим, что качественное ПО должно быть доступным и соответствовать местным требованиям.",
+                visionTitle: "Наше видение", visionDesc: "Стать лидером на рынке облачных решений для управления проектами в Восточной Европе, создавая продукты, которые объединяют команды и делают работу прозрачной.",
+                valuesTitle: "Наши ценности",
+                value1Title: "Безопасность", value1Desc: "Локализация данных в РБ и строгие стандарты защиты",
+                value2Title: "Доверие", value2Desc: "Прозрачность и честность перед клиентами",
+                value3Title: "Инновации", value3Desc: "Постоянное развитие и внедрение новых технологий",
+                value4Title: "Команда", value4Desc: "Люди — главная ценность компании",
+                teamTitle: "Наша команда",
+                team1Name: "Таврель Юлия", team1Role: "CEO и основатель", team1Desc: "Более 12 лет в IT, эксперт в области управления проектами и развития продуктов.",
+                team2Name: "Мария Шевченко", team2Role: "Технический директор", team2Desc: "Специалист по облачным архитектурам и масштабируемым решениям.",
+                team3Name: "Дмитрий Зайцев", team3Role: "Руководитель разработки", team3Desc: "Эксперт в Agile, Java и микросервисной архитектуре.",
+                historyTitle: "Наша история",
+                history2020: "Основание компании. Первая версия платформы для внутреннего использования.",
+                history2022: "Выход на рынок. Первые 50 клиентов в Беларуси.",
+                history2024: "Резидентство в ПВТ. Сертификация ISO 27001.",
+                history2026: "Более 150 компаний доверяют нам. Запуск нового API и интеграций.",
+                footerMain: "Главная", footerProduct: "Продукт", footerResources: "Ресурсы", footerAbout: "О компании", footerContacts: "Контакты",
+                copyright: "© 2026 ООО «ПроектФлоу». Хостинг в РБ, данные под защитой. SSL • локализация • надёжность"
+            },
+            be: {
+                demoBtn: "Запрасіць дэма",
+                navMain: "Галоўная", navProduct: "Прадукт", navSolutions: "Што вырашае", navWhy: "Чаму мы",
+                navHow: "Як працуем", navTariffs: "Тарыфы", navCases: "Кейсы", navAbout: "Аб кампаніі",
+                navProductDropdown: "Прадукт", navProductIt: "Для ІТ‑каманд", navProductConstruction: "Для будаўніцтва і вытворчасці",
+                navResources: "Рэсурсы", navAboutPage: "Аб кампаніі", navContacts: "Кантакты",
+                aboutHeroTitle: "Аб кампаніі ProjectFlow",
+                aboutHeroDesc: "Мы ствараем воблачнае ПА для кіравання праектамі, якое дапамагае камандам у Беларусі і за яе межамі працаваць эфектыўней.",
+                missionTitle: "Наша місія", missionDesc: "Даць беларускаму бізнесу сучасны, бяспечны і лакальны інструмент кіравання праектамі замест замежных рашэнняў. Мы верым, што якаснае ПА павінна быць даступным і адпавядаць мясцовым патрабаванням.",
+                visionTitle: "Наша бачанне", visionDesc: "Стаць лідэрам на рынку воблачных рашэнняў для кіравання праектамі ва Усходняй Еўропе, ствараючы прадукты, якія аб'ядноўваюць каманды і робяць працу празрыстай.",
+                valuesTitle: "Нашы каштоўнасці",
+                value1Title: "Бяспека", value1Desc: "Лакалізацыя даных у РБ і строгія стандарты абароны",
+                value2Title: "Давер", value2Desc: "Празрыстасць і сумленнасць перад кліентамі",
+                value3Title: "Інавацыі", value3Desc: "Пастаяннае развіццё і ўкараненне новых тэхналогій",
+                value4Title: "Каманда", value4Desc: "Людзі — галоўная каштоўнасць кампаніі",
+                teamTitle: "Наша каманда",
+                team1Name: "Таўрэль Юлія", team1Role: "CEO і заснавальнік", team1Desc: "Больш за 12 гадоў у IT, эксперт у галіне кіравання праектамі і развіцця прадуктаў.",
+                team2Name: "Марыя Шаўчэнка", team2Role: "Тэхнічны дырэктар", team2Desc: "Спецыяліст па воблачных архітэктурах і маштабаваных рашэннях.",
+                team3Name: "Дзмітрый Зайцаў", team3Role: "Кіраўнік распрацоўкі", team3Desc: "Эксперт у Agile, Java і мікрасэрвіснай архітэктуры.",
+                historyTitle: "Наша гісторыя",
+                history2020: "Заснаванне кампаніі. Першая версія платформы для ўнутранага выкарыстання.",
+                history2022: "Выхад на рынак. Першыя 50 кліентаў у Беларусі.",
+                history2024: "Рэзідэнцтва ў ПВТ. Сертыфікацыя ISO 27001.",
+                history2026: "Больш за 150 кампаній давяраюць нам. Запуск новага API і інтэграцый.",
+                footerMain: "Галоўная", footerProduct: "Прадукт", footerResources: "Рэсурсы", footerAbout: "Аб кампаніі", footerContacts: "Кантакты",
+                copyright: "© 2026 ААТ «ПраектФлоу». Хостынг у РБ, даныя пад абаронай. SSL • лакалізацыя • надзейнасць"
+            }
+        };
+
+        function applyLanguage(lang) {
+            const t = translations[lang];
+            if (!t) return;
+            Object.keys(t).forEach(key => {
+                const el = document.getElementById(key);
+                if (el) {
+                    if (el.tagName === 'BUTTON' && key !== 'calcBtn') el.textContent = t[key];
+                    else el.innerHTML = t[key];
+                }
+            });
+            const navMain = document.getElementById('navMain');
+            if (navMain) navMain.innerHTML = t.navMain + ' <i class="fas fa-chevron-down"></i>';
+            const navProductDropdown = document.getElementById('navProductDropdown');
+            if (navProductDropdown) navProductDropdown.innerHTML = t.navProductDropdown + ' <i class="fas fa-chevron-down"></i>';
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.lang === lang) btn.classList.add('active');
+            });
+        }
+
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', () => applyLanguage(btn.dataset.lang));
+        });
+
+        const burger = document.getElementById('burger');
+        const navWrapper = document.getElementById('navWrapper');
+        const overlay = document.getElementById('overlay');
+        if (burger) {
+            burger.addEventListener('click', () => {
+                navWrapper.classList.toggle('active');
+                overlay.classList.toggle('active');
+                document.body.style.overflow = navWrapper.classList.contains('active') ? 'hidden' : '';
+            });
+            overlay.addEventListener('click', () => {
+                navWrapper.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        }
+
+        document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
+            toggle.addEventListener('click', function(e) {
+                if (window.innerWidth <= 992) {
+                    e.preventDefault();
+                    this.closest('.dropdown').classList.toggle('open');
+                }
+            });
+        });
+
+        applyLanguage('ru');
+    </script>
+</body>
+</html>

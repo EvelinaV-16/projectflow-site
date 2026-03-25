@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>ProjectFlow · Блог и база знаний</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&family=Roboto+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Open Sans', sans-serif; background-color: #ffffff; color: #1a1e2b; line-height: 1.5; scroll-behavior: smooth; }
+        h1, h2, h3, h4, .btn, .badge { font-family: 'Montserrat', sans-serif; font-weight: 600; }
+        h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; letter-spacing: -0.02em; }
+        h2 { font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 600; margin-bottom: 1.5rem; letter-spacing: -0.01em; text-align: center; }
+        h3 { font-size: 1.5rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 2rem; width: 100%; }
+        :root { --primary: #2ec0f9; --grad-1: #9bbdf9; --grad-2: #c4e0f9; --accent: #b95f89; --dark: #1a2b3e; --card-bg: #ffffff; --shadow: 0 20px 30px -10px rgba(46, 192, 249, 0.15); }
+        .bg-soft { background-color: var(--grad-2); }
+        
+        .btn { display: inline-block; background-color: var(--primary); color: white; padding: 0.9rem 2rem; border-radius: 40px; text-decoration: none; font-weight: 600; transition: all 0.2s ease; border: none; cursor: pointer; text-align: center; font-size: 1rem; box-shadow: 0 4px 8px rgba(0,0,0,0.05); }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 12px 20px -8px var(--primary); }
+        .btn-accent { background-color: var(--accent); }
+        .btn-accent:hover { background-color: #a24b77; box-shadow: 0 12px 20px -8px var(--accent); }
+        .btn-outline { background: transparent; color: var(--primary); border: 2px solid var(--primary); box-shadow: none; }
+        .btn-outline:hover { background: var(--primary); color: white; box-shadow: 0 12px 20px -8px var(--primary); }
+        
+        .lang-switch { display: flex; gap: 0.3rem; margin-right: 0.5rem; }
+        .lang-btn { background: none; border: none; font-size: 0.85rem; font-weight: 500; cursor: pointer; padding: 0.3rem 0.6rem; border-radius: 30px; transition: all 0.2s; color: var(--dark); font-family: 'Montserrat', sans-serif; }
+        .lang-btn.active { background-color: var(--primary); color: white; }
+        .lang-btn:hover:not(.active) { background-color: #eef2f8; }
+        
+        header { padding: 1rem 0; position: sticky; top: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); z-index: 1000; border-bottom: 1px solid #eaf2f9; }
+        .header-flex { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .logo-area { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
+        .logo-placeholder { width: 40px; height: 40px; background: linear-gradient(135deg, var(--primary), var(--grad-1)); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; font-weight: 700; }
+        .logo-text { font-size: 1.5rem; font-weight: 700; color: var(--dark); letter-spacing: -0.02em; }
+        .logo-text span { color: var(--primary); }
+        .header-right { display: flex; align-items: center; gap: 0.8rem; flex-shrink: 0; }
+        .burger { display: none; flex-direction: column; cursor: pointer; gap: 5px; z-index: 1001; }
+        .burger span { width: 25px; height: 3px; background: var(--dark); border-radius: 3px; transition: 0.3s; }
+        .nav-wrapper { display: flex; align-items: center; gap: 1.5rem; }
+        nav { display: flex; }
+        .nav-menu { display: flex; gap: 2rem; list-style: none; align-items: center; margin: 0; padding: 0; }
+        .nav-menu > li > a { text-decoration: none; color: var(--dark); font-weight: 500; transition: 0.2s; font-size: 1rem; white-space: nowrap; }
+        .nav-menu > li > a:hover { color: var(--primary); }
+        .dropdown { position: relative; }
+        .dropdown-menu { position: absolute; top: 100%; left: 0; background: white; border-radius: 16px; box-shadow: 0 20px 35px -10px rgba(0,0,0,0.1); padding: 0.8rem 0; min-width: 200px; opacity: 0; visibility: hidden; transition: all 0.2s ease; z-index: 100; border: 1px solid #eef2f8; list-style: none; }
+        .dropdown:hover .dropdown-menu { opacity: 1; visibility: visible; }
+        .dropdown-menu li { display: block; margin: 0; }
+        .dropdown-menu a { display: block; padding: 0.5rem 1.5rem; color: #1a2b3e; white-space: nowrap; text-decoration: none; }
+        .dropdown-menu a:hover { background: #f0f7ff; color: var(--primary); }
+        .dropdown-toggle .fa-chevron-down { font-size: 0.75rem; margin-left: 0.3rem; }
+        .header-cta .btn { padding: 0.5rem 1.2rem; font-size: 0.9rem; }
+        
+        @media (max-width: 992px) {
+            .burger { display: flex; order: 2; }
+            .header-right { order: 1; margin-left: auto; margin-right: 1rem; }
+            .nav-wrapper { position: fixed; top: 0; right: -100%; width: 280px; height: 100vh; background: white; box-shadow: -5px 0 25px rgba(0,0,0,0.1); padding: 80px 2rem 2rem; transition: right 0.3s ease; z-index: 1000; flex-direction: column; align-items: flex-start; justify-content: flex-start; gap: 2rem; }
+            .nav-wrapper.active { right: 0; }
+            nav { width: 100%; }
+            .nav-menu { flex-direction: column; align-items: flex-start; gap: 1.5rem; width: 100%; }
+            .nav-menu > li { width: 100%; }
+            .nav-menu > li > a { display: block; padding: 0.5rem 0; white-space: normal; }
+            .dropdown { width: 100%; }
+            .dropdown-menu { position: static; opacity: 1; visibility: visible; display: none; box-shadow: none; padding-left: 1rem; margin-top: 0.5rem; background: #f8fafc; width: 100%; }
+            .dropdown-menu a { white-space: normal; word-break: break-word; line-height: 1.4; padding: 0.5rem 1rem; }
+            .dropdown.open .dropdown-menu { display: block; }
+            .dropdown-toggle .fa-chevron-down { float: right; margin-top: 0.5rem; }
+        }
+        
+        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); z-index: 999; }
+        .overlay.active { display: block; }
+        
+        .grid-2, .grid-3 { display: grid; gap: 2rem; }
+        .grid-2 { grid-template-columns: repeat(2,1fr); }
+        .grid-3 { grid-template-columns: repeat(3,1fr); }
+        
+        .blog-card { background: white; border-radius: 32px; padding: 1.5rem; box-shadow: 0 5px 20px rgba(0,0,0,0.02); transition: 0.3s ease; border: 1px solid rgba(157, 192, 249, 0.2); height: 100%; display: flex; flex-direction: column; }
+        .blog-card:hover { box-shadow: var(--shadow); border-color: transparent; transform: translateY(-4px); }
+        .blog-card .card-icon { font-size: 2rem; color: var(--primary); margin-bottom: 1rem; }
+        .blog-card .date { font-size: 0.85rem; color: #8da0b5; margin-bottom: 1rem; display: block; }
+        .blog-card .read-more { margin-top: 1rem; color: var(--primary); text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; }
+        
+        section { padding: 5rem 0; }
+        .section-sub { font-size: 1.2rem; color: #4a5a6e; max-width: 700px; margin: 0 auto 2rem auto; text-align: center; }
+        
+        footer { background: var(--dark); color: #cbd5e0; padding: 2rem 0; border-radius: 40px 40px 0 0; }
+        .footer-content { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem; }
+        .footer-logo { font-size: 1.3rem; font-weight: 700; color: white; }
+        .footer-logo span { color: var(--primary); }
+        .footer-links { display: flex; flex-wrap: wrap; gap: 1.8rem; }
+        .footer-links a { color: #cbd5e0; text-decoration: none; font-size: 0.9rem; }
+        .footer-links a:hover { color: white; }
+        .footer-copyright { text-align: center; margin-top: 1.5rem; font-size: 0.8rem; color: #8da0b5; }
+        
+        .search-box { display: flex; justify-content: center; margin-bottom: 3rem; }
+        .search-box input { width: 100%; max-width: 500px; padding: 1rem 1.5rem; border: 1px solid #dde7f0; border-radius: 60px; font-size: 1rem; font-family: 'Open Sans', sans-serif; }
+        .search-box input:focus { outline: none; border-color: var(--primary); }
+        
+        @media (max-width: 992px) { .grid-3 { grid-template-columns: repeat(2,1fr); } .footer-content { flex-direction: column; text-align: center; } .footer-links { justify-content: center; } }
+        @media (max-width: 768px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } section { padding: 3rem 0; } }
+        @media (max-width: 480px) { .container { padding: 0 1rem; } }
+    </style>
+</head>
+<body>
+    <div id="overlay" class="overlay"></div>
+
+    <header>
+        <div class="container header-flex">
+            <div class="logo-area">
+                <div class="logo-placeholder">PF</div>
+                <div class="logo-text">Project<span>Flow</span></div>
+            </div>
+            <div class="header-right">
+                <div class="lang-switch">
+                    <button class="lang-btn active" data-lang="ru">RU</button>
+                    <button class="lang-btn" data-lang="be">BE</button>
+                </div>
+                <div class="header-cta">
+                    <a href="index.html#demo" class="btn btn-accent" id="demoBtn">Запросить демо</a>
+                </div>
+            </div>
+            <div class="burger" id="burger"><span></span><span></span><span></span></div>
+            <div class="nav-wrapper" id="navWrapper">
+                <nav>
+                    <ul class="nav-menu">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" id="navMain">Главная <i class="fas fa-chevron-down"></i></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="index.html#product" id="navProduct">Продукт</a></li>
+                                <li><a href="index.html#solutions" id="navSolutions">Что решает</a></li>
+                                <li><a href="index.html#why" id="navWhy">Почему мы</a></li>
+                                <li><a href="index.html#how" id="navHow">Как работаем</a></li>
+                                <li><a href="index.html#tariffs" id="navTariffs">Тарифы</a></li>
+                                <li><a href="index.html#cases" id="navCases">Кейсы</a></li>
+                                <li><a href="index.html#about" id="navAbout">О компании</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" id="navProductDropdown">Продукт <i class="fas fa-chevron-down"></i></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="it-page.html" id="navProductIt">Для ИТ‑команд</a></li>
+                                <li><a href="construction-page.html" id="navProductConstruction">Для строительства и производства</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="blog.html" id="navResources">Ресурсы</a></li>
+                        <li><a href="about.html" id="navAboutPage">О компании</a></li>
+                        <li><a href="contacts.html" id="navContacts">Контакты</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section style="padding-top: 3rem;">
+            <div class="container">
+                <h1 id="blogTitle">Блог и база знаний</h1>
+                <p class="section-sub" id="blogDesc">Полезные статьи, вебинары и инструкции по управлению проектами</p>
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Поиск по статьям...">
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-soft">
+            <div class="container">
+                <div class="grid-3" id="blogGrid">
+                    <!-- Статья 1 -->
+                    <div class="blog-card" data-category="agile">
+                        <i class="fas fa-chart-line card-icon"></i>
+                        <h3 id="post1Title">Как внедрить Agile на производстве</h3>
+                        <span class="date" id="post1Date">12 марта 2026</span>
+                        <p id="post1Desc">Agile — это не только для IT. Рассказываем, как адаптировать гибкие методологии в производственных процессах.</p>
+                        <a href="blog-post.html" class="read-more" id="post1Link">Читать →</a>
+                    </div>
+                    <!-- Статья 2 -->
+                    <div class="blog-card" data-category="gantt">
+                        <i class="fas fa-chart-gantt card-icon"></i>
+                        <h3 id="post2Title">Диаграммы Ганта: от простого к сложному</h3>
+                        <span class="date" id="post2Date">5 марта 2026</span>
+                        <p id="post2Desc">Как правильно строить диаграммы Ганта, чтобы контролировать сроки и ресурсы.</p>
+                        <a href="blog-post.html" class="read-more" id="post2Link">Читать →</a>
+                    </div>
+                    <!-- Статья 3 -->
+                    <div class="blog-card" data-category="integration">
+                        <i class="fas fa-code-branch card-icon"></i>
+                        <h3 id="post3Title">Обновление API v2: новые возможности интеграции</h3>
+                        <span class="date" id="post3Date">20 февраля 2026</span>
+                        <p id="post3Desc">Что нового в API ProjectFlow: интеграция с 1С, CRM и кастомизация.</p>
+                        <a href="docs.html" class="read-more" id="post3Link">Читать →</a>
+                    </div>
+                    <!-- Статья 4 -->
+                    <div class="blog-card" data-category="webinar">
+                        <i class="fas fa-video card-icon"></i>
+                        <h3 id="post4Title">Вебинар: Управление ресурсами в строительстве</h3>
+                        <span class="date" id="post4Date">15 февраля 2026</span>
+                        <p id="post4Desc">Как эффективно распределять людей, технику и материалы на строительной площадке.</p>
+                        <a href="webinar.html" class="read-more" id="post4Link">Смотреть →</a>
+                    </div>
+                    <!-- Статья 5 -->
+                    <div class="blog-card" data-category="security">
+                        <i class="fas fa-shield-alt card-icon"></i>
+                        <h3 id="post5Title">Безопасность данных в облаке: что нужно знать</h3>
+                        <span class="date" id="post5Date">1 февраля 2026</span>
+                        <p id="post5Desc">Как мы защищаем ваши данные: шифрование, локализация в РБ и ролевой доступ.</p>
+                        <a href="blog-post.html" class="read-more" id="post5Link">Читать →</a>
+                    </div>
+                    <!-- Статья 6 -->
+                    <div class="blog-card" data-category="analytics">
+                        <i class="fas fa-chart-simple card-icon"></i>
+                        <h3 id="post6Title">Аналитика для руководителей: дашборды и отчёты</h3>
+                        <span class="date" id="post6Date">20 января 2026</span>
+                        <p id="post6Desc">Какие метрики важны для контроля проектов и как их отслеживать в ProjectFlow.</p>
+                        <a href="blog-post.html" class="read-more" id="post6Link">Читать →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">Project<span>Flow</span></div>
+                <div class="footer-links">
+                    <a href="index.html" id="footerMain">Главная</a>
+                    <a href="it-page.html" id="footerProduct">Продукт</a>
+                    <a href="blog.html" id="footerResources">Ресурсы</a>
+                    <a href="about.html" id="footerAbout">О компании</a>
+                    <a href="contacts.html" id="footerContacts">Контакты</a>
+                </div>
+            </div>
+            <div class="footer-copyright">
+                <p id="copyright">© 2026 ООО «ПроектФлоу». Хостинг в РБ, данные под защитой. SSL • локализация • надёжность</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const translations = {
+            ru: {
+                demoBtn: "Запросить демо",
+                navMain: "Главная", navProduct: "Продукт", navSolutions: "Что решает", navWhy: "Почему мы",
+                navHow: "Как работаем", navTariffs: "Тарифы", navCases: "Кейсы", navAbout: "О компании",
+                navProductDropdown: "Продукт", navProductIt: "Для ИТ‑команд", navProductConstruction: "Для строительства и производства",
+                navResources: "Ресурсы", navAboutPage: "О компании", navContacts: "Контакты",
+                blogTitle: "Блог и база знаний",
+                blogDesc: "Полезные статьи, вебинары и инструкции по управлению проектами",
+                post1Title: "Как внедрить Agile на производстве", post1Date: "12 марта 2026", post1Desc: "Agile — это не только для IT. Рассказываем, как адаптировать гибкие методологии в производственных процессах.", post1Link: "Читать →",
+                post2Title: "Диаграммы Ганта: от простого к сложному", post2Date: "5 марта 2026", post2Desc: "Как правильно строить диаграммы Ганта, чтобы контролировать сроки и ресурсы.", post2Link: "Читать →",
+                post3Title: "Обновление API v2: новые возможности интеграции", post3Date: "20 февраля 2026", post3Desc: "Что нового в API ProjectFlow: интеграция с 1С, CRM и кастомизация.", post3Link: "Читать →",
+                post4Title: "Вебинар: Управление ресурсами в строительстве", post4Date: "15 февраля 2026", post4Desc: "Как эффективно распределять людей, технику и материалы на строительной площадке.", post4Link: "Смотреть →",
+                post5Title: "Безопасность данных в облаке: что нужно знать", post5Date: "1 февраля 2026", post5Desc: "Как мы защищаем ваши данные: шифрование, локализация в РБ и ролевой доступ.", post5Link: "Читать →",
+                post6Title: "Аналитика для руководителей: дашборды и отчёты", post6Date: "20 января 2026", post6Desc: "Какие метрики важны для контроля проектов и как их отслеживать в ProjectFlow.", post6Link: "Читать →",
+                footerMain: "Главная", footerProduct: "Продукт", footerResources: "Ресурсы", footerAbout: "О компании", footerContacts: "Контакты",
+                copyright: "© 2026 ООО «ПроектФлоу». Хостинг в РБ, данные под защитой. SSL • локализация • надёжность"
+            },
+            be: {
+                demoBtn: "Запрасіць дэма",
+                navMain: "Галоўная", navProduct: "Прадукт", navSolutions: "Што вырашае", navWhy: "Чаму мы",
+                navHow: "Як працуем", navTariffs: "Тарыфы", navCases: "Кейсы", navAbout: "Аб кампаніі",
+                navProductDropdown: "Прадукт", navProductIt: "Для ІТ‑каманд", navProductConstruction: "Для будаўніцтва і вытворчасці",
+                navResources: "Рэсурсы", navAboutPage: "Аб кампаніі", navContacts: "Кантакты",
+                blogTitle: "Блог і база ведаў",
+                blogDesc: "Карысныя артыкулы, вэбінары і інструкцыі па кіраванні праектамі",
+                post1Title: "Як укараніць Agile на вытворчасці", post1Date: "12 сакавіка 2026", post1Desc: "Agile — гэта не толькі для IT. Расказваем, як адаптаваць гібкія метадалогіі ў вытворчых працэсах.", post1Link: "Чытаць →",
+                post2Title: "Дыяграмы Ганта: ад простага да складанага", post2Date: "5 сакавіка 2026", post2Desc: "Як правільна будаваць дыяграмы Ганта, каб кантраляваць тэрміны і рэсурсы.", post2Link: "Чытаць →",
+                post3Title: "Абнаўленне API v2: новыя магчымасці інтэграцыі", post3Date: "20 лютага 2026", post3Desc: "Што новага ў API ProjectFlow: інтэграцыя з 1С, CRM і кастамізацыя.", post3Link: "Чытаць →",
+                post4Title: "Вэбінар: Кіраванне рэсурсамі ў будаўніцтве", post4Date: "15 лютага 2026", post4Desc: "Як эфектыўна размеркаваць людзей, тэхніку і матэрыялы на будаўнічай пляцоўцы.", post4Link: "Глядзець →",
+                post5Title: "Бяспека даных у воблаку: што трэба ведаць", post5Date: "1 лютага 2026", post5Desc: "Як мы абараняем вашы даныя: шыфраванне, лакалізацыя ў РБ і ролевы доступ.", post5Link: "Чытаць →",
+                post6Title: "Аналітыка для кіраўнікоў: дашборды і справаздачы", post6Date: "20 студзеня 2026", post6Desc: "Якія метрыкі важныя для кантролю праектаў і як іх адсочваць у ProjectFlow.", post6Link: "Чытаць →",
+                footerMain: "Галоўная", footerProduct: "Прадукт", footerResources: "Рэсурсы", footerAbout: "Аб кампаніі", footerContacts: "Кантакты",
+                copyright: "© 2026 ААТ «ПраектФлоу». Хостынг у РБ, даныя пад абаронай. SSL • лакалізацыя • надзейнасць"
+            }
+        };
+
+        function applyLanguage(lang) {
+            const t = translations[lang];
+            if (!t) return;
+            Object.keys(t).forEach(key => {
+                const el = document.getElementById(key);
+                if (el) {
+                    if (el.tagName === 'BUTTON' && key !== 'calcBtn') el.textContent = t[key];
+                    else el.innerHTML = t[key];
+                }
+            });
+            const navMain = document.getElementById('navMain');
+            if (navMain) navMain.innerHTML = t.navMain + ' <i class="fas fa-chevron-down"></i>';
+            const navProductDropdown = document.getElementById('navProductDropdown');
+            if (navProductDropdown) navProductDropdown.innerHTML = t.navProductDropdown + ' <i class="fas fa-chevron-down"></i>';
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.lang === lang) btn.classList.add('active');
+            });
+        }
+
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', () => applyLanguage(btn.dataset.lang));
+        });
+
+        // Поиск по статьям
+        const searchInput = document.getElementById('searchInput');
+        if (searchInput) {
+            searchInput.addEventListener('input', function() {
+                const query = this.value.toLowerCase();
+                const cards = document.querySelectorAll('.blog-card');
+                cards.forEach(card => {
+                    const title = card.querySelector('h3').textContent.toLowerCase();
+                    const desc = card.querySelector('p').textContent.toLowerCase();
+                    if (title.includes(query) || desc.includes(query)) {
+                        card.style.display = '';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        }
+
+        const burger = document.getElementById('burger');
+        const navWrapper = document.getElementById('navWrapper');
+        const overlay = document.getElementById('overlay');
+        if (burger) {
+            burger.addEventListener('click', () => {
+                navWrapper.classList.toggle('active');
+                overlay.classList.toggle('active');
+                document.body.style.overflow = navWrapper.classList.contains('active') ? 'hidden' : '';
+            });
+            overlay.addEventListener('click', () => {
+                navWrapper.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        }
+
+        document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
+            toggle.addEventListener('click', function(e) {
+                if (window.innerWidth <= 992) {
+                    e.preventDefault();
+                    this.closest('.dropdown').classList.toggle('open');
+                }
+            });
+        });
+
+        applyLanguage('ru');
+    </script>
+</body>
+</html>
